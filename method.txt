@@ -1,0 +1,24 @@
+Controller Methods
+    insert($table_name,cols...);  // Insert data
+    fetchAll('table_name') // Fetch all datas
+    fetchAllDesc('table_name');  // Fetch or data desc
+    fetchWhereLikeOr("table_name", "col = $value",...)
+    fetchWhereLikeAnd("table_name", "col = $value",...)
+    fetchWhereAnd("table_name", "col = $value",...)
+    fetchWhereOr("table_name", "col = $value",...)
+    trashWhere("table_name", "col = $value",...)
+    update("users",U::col("col = $value",...),U::where("col = $value",...))
+
+[name]Controller Methods
+    index()  
+    create()
+    store()
+    showLike()
+    show()
+    delete()
+    edit()
+    update()
+
+
+
+
