@@ -216,11 +216,11 @@ $ctr = new SalesController();
                             <input style="display: none;" class="form-control" style="width:100%;box-sizing:border-box" name="transport" id="transport" value="0" required>
                         </div>
                         <div id="paidBal">
-                            <div class="form-froup">
+                            <div class="form-group">
                                 <label for="">Paid: </label>
                                 <input class="form-control" name="deposit" id="deposit" style="width:100%;box-sizing:border-box" type="number" readonly value="0">
                             </div>
-                            <div class="form-froup">
+                            <div class="form-group">
                                 <label for="">Balance: </label>
                                 <input class="form-control" style="width:100%;box-sizing:border-box;" type="number" name="balance" id="balance" value="<? echo $total ?>" readonly>
 

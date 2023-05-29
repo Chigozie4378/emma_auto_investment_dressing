@@ -50,7 +50,7 @@ class SalesController extends Controller
                 $title = $_POST["title"];
                 $customer_name = $title . " " . $_POST["customer_name"];
                 $customer_address = $_POST["customer_address"];
-                $pos_type = $_POST["pos_type"];
+                
                 $transport = $_POST["transport"];
                 $old_deposit = $_POST['old_deposit'];
                 $invoice_no = $_POST["invoice_no"];
@@ -61,7 +61,7 @@ class SalesController extends Controller
                 $cash = $_POST["cash"];
                 $transfer = $_POST["transfer"];
                 $pos = $_POST["pos"];
-                $pos_charges = $_POST["pos_charges"];
+               
                 $deposit = $_POST["deposit"];
                 $balance = $_POST["balance"];
                 $total = $_POST["tot"];
@@ -144,7 +144,13 @@ class SalesController extends Controller
                         $bank_name = $_POST["bank"];
                         $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff, $date);
                     }
-                    $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff, $date);
+                    
+                    if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
+                        $pos_charges = $_POST["pos_charges"];
+                        $pos_type = $_POST["pos_type"];
+                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff, $date);
+                    }
+                  
                     $this->insert('sales', $customer_name, $customer_address, $invoice_no2,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff, $date, $username);
 
                     // debit 
@@ -232,7 +238,11 @@ class SalesController extends Controller
                         $bank_name = $_POST["bank"];
                         $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff, $date);
                     }
-                    $this->insert('pos', $pos_type, $invoice_no, $pos, $pos_charges, $staff, $date);
+                    if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
+                        $pos_charges = $_POST["pos_charges"];
+                        $pos_type = $_POST["pos_type"];
+                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff, $date);
+                    }
                     $this->insert('sales', $customer_name, $customer_address, $invoice_no,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff, $date, $username);
 
                     // debit 
