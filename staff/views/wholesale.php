@@ -1,2 +1,2 @@
 <?php 
-include_once("./retail.php");
+include_once("./template/sales.php");

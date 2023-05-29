@@ -53,14 +53,17 @@ for ($i = 0; $i < $max; $i++) {
         <p style="float:right;font-weight:bold">Total Amount: # </p>
     </td>
     <td>
-        <p style="font-weight:bold"><span id="total"><?php echo  number_format($total, 2) ?></span></p>
+        <p style="font-weight:bold"><span id="total"><?php echo  number_format($total, 2); ?></span></p>
     </td>
+
+
     <input type="hidden" name="tot" id="tot" value="<?php echo $total ?>">
+
     <td></td>
 
 </tr>
 <tr>
-<td colspan="2"><label for="check">Check Deposit </label> <input type="checkbox" name="" id="check" onpointerout="cashCalc(this.value,document.getElementById('pos').value,document.getElementById('transfer').value,document.getElementById('tot').value,document.getElementById('old_deposit').value)" onclick="checkDeposit(document.getElementById('title').value,document.getElementById('customer_name').value,document.getElementById('address').value)"></td>
-    <td colspan="3" ><label for="check">Add Transport </label> <input type="checkbox" name="" id="add_transport" onclick="addTransport()"></td>
+    <td colspan="2"><label for="check">Check Deposit </label> <input type="checkbox" name="" id="check" onpointerout="cashCalc(this.value,document.getElementById('pos').value,document.getElementById('transfer').value,document.getElementById('tot').value,document.getElementById('old_deposit').value)" onclick="checkDeposit(document.getElementById('title').value,document.getElementById('customer_name').value,document.getElementById('address').value)"></td>
+    <td colspan="3"><label for="check">Add Transport </label> <input type="checkbox" name="" id="add_transport" onclick="addTransport()"></td>
     <td colspan="3"></td>
 </tr>

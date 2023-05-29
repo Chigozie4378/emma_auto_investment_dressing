@@ -85,6 +85,55 @@ class Model extends DB
         // Return the result object
         return $result;
     }
+    protected function selectWhereAndLimit($table_name, $where_array)
+{
+    $dbconn = $this->connect();
+
+    // Build query string
+    $query = "SELECT * FROM $table_name WHERE ";
+    $where_clause = array();
+    foreach ($where_array as $key => $value) {
+        if (strpos($value, '%') !== false) {
+            $where_clause[] = "$key LIKE ?";
+        } else {
+            $where_clause[] = "$key = ?";
+        }
+    }
+    $query .= implode(" AND ", $where_clause);
+    
+    // Add ORDER BY id DESC LIMIT 1 clause
+    $query .= " ORDER BY id DESC LIMIT 1";
+
+    // Prepare the statement
+    $stmt = $dbconn->prepare($query);
+
+    // Bind parameters
+    $types = "";
+    foreach ($where_array as $value) {
+        if (is_int($value)) {
+            $types .= "i";
+        } elseif (is_double($value)) {
+            $types .= "d";
+        } else {
+            $types .= "s";
+        }
+    }
+    $stmt->bind_param($types, ...array_values($where_array));
+
+    // Execute the statement
+    $stmt->execute();
+
+    // Get the result
+    $result = $stmt->get_result();
+
+    // Close statement and connection
+    $stmt->close();
+    $dbconn->close();
+
+    // Return the result object
+    return $result;
+}
+
     protected function selectWhereOr($table_name, $where_array)
     {
         $dbconn = $this->connect();
@@ -156,6 +205,26 @@ class Model extends DB
 
         // Prepare the statement with a placeholder for the table name
         $stmt = $dbconn->prepare("SELECT * FROM $table_name ORDER BY id DESC");
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Close statement and connection
+        $stmt->close();
+        $dbconn->close();
+
+        // Return the result object
+        return $result;
+    }
+    protected function selectAllDescLimit($table_name)
+    {
+        $dbconn = $this->connect();
+
+        // Prepare the statement with a placeholder for the table name
+        $stmt = $dbconn->prepare("SELECT * FROM $table_name ORDER BY id DESC LIMIT 1");
 
         // Execute the statement
         $stmt->execute();
@@ -259,6 +328,20 @@ class Model extends DB
         $stmt->execute();
 
         // Close statement and connection
+        $stmt->close();
+        $dbconn->close();
+    }
+    public function invoiceLock(){
+        $dbconn = $this->connect();
+        $stmt = $dbconn->prepare("SELECT * FROM sales FOR UPDATE");
+        $stmt->execute();
+        $stmt->close();
+        $dbconn->close();
+    }
+    public function invoiceUnlock(){
+        $dbconn = $this->connect();
+        $stmt = $dbconn->prepare("UNLOCK TABLES");
+        $stmt->execute();
         $stmt->close();
         $dbconn->close();
     }

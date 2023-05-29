@@ -27,6 +27,11 @@ class Controller extends Model
     // select all datas
     return $this->selectAllDesc("$table_name");
   }
+  protected function fetchAllDescLimit($table_name)
+  {
+    // select all datas
+    return $this->selectAllDescLimit("$table_name");
+  }
   protected function fetchWhereAnd($table_name, ...$where_clauses)
   {
     $where_array = array();
@@ -38,6 +43,18 @@ class Controller extends Model
     }
 
     return $this->selectWhereAnd($table_name, $where_array);
+  }
+  protected function fetchWhereAndLimit($table_name, ...$where_clauses)
+  {
+    $where_array = array();
+    foreach ($where_clauses as $where_clause) {
+      $parts = explode('=', $where_clause);
+      $key = trim($parts[0]);
+      $value = trim($parts[1]);
+      $where_array[$key] = $value;
+    }
+
+    return $this->selectWhereAndLimit($table_name, $where_array);
   }
   protected function fetchWhereOr($table_name, ...$where_clauses)
   {
@@ -93,5 +110,11 @@ class Controller extends Model
   protected function updates($table, $update_columns, $where_columns)
   {
     $this->updateData($table, $update_columns, $where_columns);
+  }
+  protected function lockInvoice(){
+    $this->invoiceLock();
+  }
+  protected function unlockInvoice(){
+    $this->invoiceUnlock();
   }
 }
