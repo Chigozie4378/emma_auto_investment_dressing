@@ -22,7 +22,7 @@
             </div><!-- /.col -->
             <div class='col-sm-6'>
               <ol class='breadcrumb float-sm-right'>
-                <li class='breadcrumb-item'><a href='#'>Home</a></li>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
                 <li class='breadcrumb-item active'><a href='add_stock.php'>Add Product</a></li>
               </ol>
             </div><!-- /.col -->
@@ -33,23 +33,34 @@
             </div><!-- /.col -->
             <div class='col-sm-6'>
               <ol class='breadcrumb float-sm-right'>
-                <li class='breadcrumb-item'><a href='#'>Home</a></li>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
                 <li class='breadcrumb-item active'><a href='add_stock.php'>Add Product</a></li>
               </ol>
             </div><!-- /.col -->
             "; 
-          }
-          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/show_stock.php'){
-            echo "<h1 class='m-0'>View Product</h1>
+          }  
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/manage_user.php'){
+            echo "<h1 class='m-0'>Users</h1>
             </div><!-- /.col -->
             <div class='col-sm-6'>
               <ol class='breadcrumb float-sm-right'>
-                <li class='breadcrumb-item'><a href='#'>Home</a></li>
-                <li class='breadcrumb-item active'><a href='show_stock.php'>View Product</a></li>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='manage_user.php'>Manage User</a></li>
               </ol>
             </div><!-- /.col -->
             "; 
-          }   
+          }  
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/edit_user.php'){
+            echo "<h1 class='m-0'>Users</h1>
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='manage_user.php'>Manage User</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }  
           ?>
             
          

@@ -50,6 +50,16 @@
               </p>
             </a>
           </li>
+          <li class="nav-item">
+            <a href="manage_user.php" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/manage_user.php')) {
+                                                  echo "active";
+                                                } ?>">
+              <i class="nav-icon fa-solid fa-people-roof"></i>
+              <p>
+                Manage User
+              </p>
+            </a>
+          </li>
           <!-- <li class="nav-item menu-open">
             <a href="#" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/wholesale.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/retail.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/cartoon.php')) {
                                           echo "active";
