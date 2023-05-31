@@ -27,4 +27,9 @@ class AdminLoginController extends Controller
             }
         }
     }
+    public function logout()
+    {
+        session_destroy();
+        header("location:../../admin.php");
+    }
 }

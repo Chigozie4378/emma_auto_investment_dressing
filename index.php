@@ -6,6 +6,7 @@
 session_start();
 include_once "./autoload/loader.php";
 $ctr = new StaffLoginController();
+Session::staffLoginAccess('staff_username');
 ?>
 <!DOCTYPE html>
 <html>

@@ -1,6 +1,7 @@
 <?php
 session_start();
-include_once "../../autoload/loader.php"
+include_once "../../autoload/loader.php";
+Session::staffAccess('staff_username');
 ?>
 <!DOCTYPE html>
 <html lang="en">
