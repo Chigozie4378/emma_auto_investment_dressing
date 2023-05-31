@@ -83,7 +83,7 @@ $ctr = new SalesController();
 <div class="container-fluid mb-2" style="height:89vh">
     <form action="" method="post">
         <div class="row mt-2 rounded">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-12">
                 <div class="row mb-2">
                     <div class="col-md-9">
                         <div class="input-group" style="cursor:pointer">
@@ -135,7 +135,7 @@ $ctr = new SalesController();
                 </div>
             </div>
 
-            <div class="col-md-5">
+            <div class="col-md-5 col-sm-12">
                 <div class="card cart">
                     <div class="card-body">
 
@@ -155,7 +155,7 @@ $ctr = new SalesController();
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3 col-sm-12">
                 <div class="card checkout">
 
                     <div class="card-body">
@@ -222,7 +222,7 @@ $ctr = new SalesController();
                             </div>
                             <div class="form-group">
                                 <label for="">Balance: </label>
-                                <input class="form-control" style="width:100%;box-sizing:border-box;" type="number" name="balance" id="balance" value="<? echo $total ?>" readonly>
+                                <input class="form-control" style="width:100%;box-sizing:border-box;" type="number" name="balance" id="balance" readonly>
 
 
                             </div>

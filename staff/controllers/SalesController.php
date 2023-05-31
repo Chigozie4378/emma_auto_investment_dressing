@@ -55,7 +55,7 @@ class SalesController extends Controller
                 $old_deposit = $_POST['old_deposit'];
                 $invoice_no = $_POST["invoice_no"];
                 $_SESSION["customer_name"] = $customer_name;
-                $_SESSION["address"] = $customer_address;
+                $_SESSION["customer_address"] = $customer_address;
 
                 $date = date("d-m-Y");
                 $cash = $_POST["cash"];
@@ -139,7 +139,7 @@ class SalesController extends Controller
                 // sales
                 $fetch_invoice_no = $this->fetchWhereAnd("sales", "invoice_no = $invoice_no");
                 if (mysqli_num_rows($fetch_invoice_no) > 0) {
-                    $_SESSION["invoice"] = $invoice_no2;
+                    $_SESSION["invoice_no"] = $invoice_no2;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
                         $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff, $date);
@@ -216,7 +216,7 @@ class SalesController extends Controller
                                 $result_qty = mysqli_fetch_array($select_qty);
                                 $prev_qty = $result_qty['quantity'];
                                 $new_qty = $prev_qty - $qty;
-                                $this->insert("sales_histories", $invoice_no2, $productname_session, $quantity_session, $price_session, $amount);
+                                $this->insert("sales_details", $invoice_no2, $productname_session, $quantity_session, $price_session, $amount);
                                 $this->updates(
                                     "stocks",
                                     U::col("quantity = $new_qty"),
@@ -225,15 +225,15 @@ class SalesController extends Controller
                             }
                         }
                     }
-                    // if ($_POST["customer_type"] == "retail") {
-                    //     Session::unset("cart");
-                    //     echo "<script> window.location = '../print/director/retail_print.php' </script>";
-                    // } else {
-                    //     Session::unset("cart");
-                    //     echo "<script> window.location = 'print_receipt_w.php' </script>";
-                    // }
+                    if ($_POST["customer_type"] == "retail") {
+                        Session::unset("cart");
+                        echo "<script> window.location = '../print/director/retail_print.php' </script>";
+                    } else {
+                        Session::unset("cart");
+                        echo "<script> window.location = 'print_wholesale.php' </script>";
+                    }
                 } else {
-
+                    $_SESSION["invoice_no"] = $invoice_no;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
                         $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff, $date);
@@ -272,11 +272,11 @@ class SalesController extends Controller
                                     U::col("total = $new_total", "deposit= $new_deposit", "balance= $new_balance1", "staff = $staff", "date = $date"),
                                     U::where("customer_name = $customer_name", "customer_address = $customer_address")
                                 );
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total, $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff, $date);
                             } else {
                                 $this->insert("debit", $customer_name, $customer_address, $total, $deposit, $balance, $staff, $date);
                                 $this->trashWhere("debit", "balance = 0");
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total, $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff, $date);
                             }
                         }
                     }
@@ -309,7 +309,7 @@ class SalesController extends Controller
                                 $result_qty = mysqli_fetch_array($select_qty);
                                 $prev_qty = $result_qty['quantity'];
                                 $new_qty = $prev_qty - $qty;
-                                $this->insert("sales_histories", $invoice_no, $productname_session, $quantity_session, $price_session, $amount);
+                                $this->insert("sales_details", $invoice_no, $productname_session, $quantity_session, $price_session, $amount);
                                 $this->updates(
                                     "stocks",
                                     U::col("quantity = $new_qty"),
@@ -318,15 +318,51 @@ class SalesController extends Controller
                             }
                         }
                     }
-                    // if ($_POST["customer_type"] == "retail") {
-                    //     Session::unset("cart");
-                    //     echo "<script> window.location = '../print/director/retail_print.php' </script>";
-                    // } else {
-                    //     Session::unset("cart");
-                    //     echo "<script> window.location = 'print_receipt_w.php' </script>";
-                    // }
+                    if ($_POST["customer_type"] == "retail") {
+                        Session::unset("cart");
+                        echo "<script> window.location = '../print/director/retail_print.php' </script>";
+                    } else {
+                        Session::unset("cart");
+                        echo "<script> window.location = 'print_wholesale.php' </script>";
+                    }
                 }
             }
         }
     }
+    public function showSales($customer_name, $customer_address,$invoice_no)
+    {
+        return $this->fetchWhereAnd("sales", "customer_name = $customer_name", "customer_address = $customer_address","invoice_no = $invoice_no");
+        
+    }
+    public function showSalesDetails($invoice_no)
+    {
+        return $this->fetchWhereAnd("sales_details", "invoice_no = $invoice_no");
+        
+    }
+    public function showDebit($customer_name, $customer_address)
+    {
+        return $this->fetchWhereAnd("debit", "customer_name = $customer_name", "customer_address = $customer_address");
+        
+    }
+    public function showTransfer($invoice_no)
+    {
+        return $this->fetchWhereAnd("transfer", "invoice_no = $invoice_no");
+        
+    }
+    public function showPos($invoice_no)
+    {
+        return $this->fetchWhereAnd("pos", "invoice_no = $invoice_no");
+        
+    }
+    public function printInvoice($customer_name, $customer_address, $invoice_no, $supplied_by, $checked_by){
+
+        if (isset($_POST["print"])) {
+            $this->insert("supplied", $customer_name, $customer_address, $invoice_no, $supplied_by, $checked_by);
+            Session::unset("invoice_no");
+            Session::unset("customer_name");
+            Session::unset("customer_address");
+            echo "<script> window.location = 'wholesale.php' </script>";
+        }
+    }
+
 }

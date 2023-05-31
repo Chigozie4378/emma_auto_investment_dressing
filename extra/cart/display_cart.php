@@ -48,6 +48,9 @@ for ($i = 0; $i < $max; $i++) {
 }
 ?>
 
+
+
+
 <tr>
     <td colspan="4">
         <p style="float:right;font-weight:bold">Total Amount: # </p>

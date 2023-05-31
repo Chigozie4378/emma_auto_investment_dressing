@@ -27,16 +27,40 @@ function addToCart(value1, value2, value3, value4) {
 
 }
 
+// function displayCart() {
+//   var xhttp = new XMLHttpRequest();
+//   xhttp.onreadystatechange = function () {
+//     if (this.readyState == 4 && this.status == 200) {
+//       document.getElementById("cart").innerHTML = this.responseText;
+//     }
+//   };
+//   xhttp.open("POST", "../../extra/cart/display_cart.php", true);
+//   xhttp.send();
+// }
+
 function displayCart() {
   var xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
+  xhttp.onreadystatechange = function() {
     if (this.readyState == 4 && this.status == 200) {
+      // Create a virtual DOM where you can query for elements in the response
+      var parser = new DOMParser();
+      var doc = parser.parseFromString(this.responseText, "text/html");
+
+      // Extract the total amount from the response
+      var totalAmount = doc.getElementById('tot').value;
+
+      // Set the total amount to the input field
+      document.getElementById('balance').value = totalAmount;
+      
+      // Update the cart HTML
       document.getElementById("cart").innerHTML = this.responseText;
     }
   };
   xhttp.open("POST", "../../extra/cart/display_cart.php", true);
   xhttp.send();
 }
+
+
 
 function deleteItem(value) {
   $(document).ready(function () {
