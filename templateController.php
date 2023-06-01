@@ -78,6 +78,9 @@ class NameController extends Controller
             return $this->fetchWhereLikeOr("users", "name = $search","address = $search","phone_no = $search");
         }
     }
+    public function showAndDesc(){
+        return $this->fetchWhereAndDesc();
+    }
     public function delete()
     {
         if (isset($_GET["id"])) {
@@ -108,6 +111,14 @@ class NameController extends Controller
     
             header("location:test.php");
         }
+    }
+    public function sum(){
+       return $this->fetchWhereLikeOperation('table_name', 'sum', 'column_name', 'column1=value1', 'column2=value2');
+
+    }
+    public function count(){
+        return $this->fetchWhereLikeOperation('table_name', 'count', 'column_name', 'column1=value1', 'column2=value2');
+ 
     }
     
     

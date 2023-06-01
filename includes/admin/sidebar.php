@@ -41,6 +41,14 @@
             </a>
           </li>
           <li class="nav-item">
+              <a href="sales_history.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/sales_history.php'){ echo "active"; } ?>">
+                <i class="nav-icon fa fa-history"></i>
+                 <p>
+                   Today Sales History
+                </p>
+             </a>
+         </li>
+          <li class="nav-item">
             <a href="stock.php" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/stock.php')) {
                                                   echo "active";
                                                 } ?>">

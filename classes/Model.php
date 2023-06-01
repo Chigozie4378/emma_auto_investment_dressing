@@ -1,6 +1,24 @@
 <?php
 class Model extends DB
 {
+    function __construct()
+    {
+        $this->connect();
+    }
+
+    function __destruct()
+    {
+        $this->closeConnection();
+    }
+
+
+    protected function closeConnection()
+    {
+        $dbconn = $this->connect();
+        if ($dbconn) {
+            $dbconn->close();
+        }
+    }
     protected function insertData($table_name, $data_array)
     {
 
@@ -37,7 +55,6 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
     }
 
     protected function selectWhereAnd($table_name, $where_array)
@@ -80,59 +97,59 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
     }
     protected function selectWhereAndLimit($table_name, $where_array)
-{
-    $dbconn = $this->connect();
+    {
+        $dbconn = $this->connect();
 
-    // Build query string
-    $query = "SELECT * FROM $table_name WHERE ";
-    $where_clause = array();
-    foreach ($where_array as $key => $value) {
-        if (strpos($value, '%') !== false) {
-            $where_clause[] = "$key LIKE ?";
-        } else {
-            $where_clause[] = "$key = ?";
+        // Build query string
+        $query = "SELECT * FROM $table_name WHERE ";
+        $where_clause = array();
+        foreach ($where_array as $key => $value) {
+            if (strpos($value, '%') !== false) {
+                $where_clause[] = "$key LIKE ?";
+            } else {
+                $where_clause[] = "$key = ?";
+            }
         }
-    }
-    $query .= implode(" AND ", $where_clause);
-    
-    // Add ORDER BY id DESC LIMIT 1 clause
-    $query .= " ORDER BY id DESC LIMIT 1";
+        $query .= implode(" AND ", $where_clause);
 
-    // Prepare the statement
-    $stmt = $dbconn->prepare($query);
+        // Add ORDER BY id DESC LIMIT 1 clause
+        $query .= " ORDER BY id DESC LIMIT 1";
 
-    // Bind parameters
-    $types = "";
-    foreach ($where_array as $value) {
-        if (is_int($value)) {
-            $types .= "i";
-        } elseif (is_double($value)) {
-            $types .= "d";
-        } else {
-            $types .= "s";
+        // Prepare the statement
+        $stmt = $dbconn->prepare($query);
+
+        // Bind parameters
+        $types = "";
+        foreach ($where_array as $value) {
+            if (is_int($value)) {
+                $types .= "i";
+            } elseif (is_double($value)) {
+                $types .= "d";
+            } else {
+                $types .= "s";
+            }
         }
+        $stmt->bind_param($types, ...array_values($where_array));
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Close statement and connection
+        $stmt->close();
+
+
+        // Return the result object
+        return $result;
     }
-    $stmt->bind_param($types, ...array_values($where_array));
-
-    // Execute the statement
-    $stmt->execute();
-
-    // Get the result
-    $result = $stmt->get_result();
-
-    // Close statement and connection
-    $stmt->close();
-    $dbconn->close();
-
-    // Return the result object
-    return $result;
-}
 
     protected function selectWhereOr($table_name, $where_array)
     {
@@ -174,7 +191,7 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
@@ -194,7 +211,7 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
@@ -214,7 +231,7 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
@@ -234,7 +251,7 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
@@ -277,7 +294,7 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
+
 
         // Return the result object
         return $result;
@@ -329,20 +346,128 @@ class Model extends DB
 
         // Close statement and connection
         $stmt->close();
-        $dbconn->close();
     }
-    public function invoiceLock(){
+
+    protected function selectWhereOperation($table_name, $where_array, $operation, $column_name)
+    {
+        $dbconn = $this->connect();
+
+        switch (strtolower($operation)) {
+            case 'sum':
+                $query = "SELECT SUM($column_name) AS value FROM $table_name WHERE ";
+                break;
+            case 'count':
+                $query = "SELECT COUNT($column_name) AS value FROM $table_name WHERE ";
+                break;
+            default:
+                throw new Exception("Invalid operation: $operation");
+        }
+
+        // Build WHERE clause
+        $where_clause = array();
+        foreach ($where_array as $key => $value) {
+            if (strpos($value, '%') !== false) {
+                $where_clause[] = "$key LIKE ?";
+            } else {
+                $where_clause[] = "$key = ?";
+            }
+        }
+        $query .= implode(" AND ", $where_clause);
+
+        // Prepare the statement
+        $stmt = $dbconn->prepare($query);
+
+        // Bind parameters
+        $types = "";
+        foreach ($where_array as $value) {
+            if (is_int($value)) {
+                $types .= "i";
+            } elseif (is_double($value)) {
+                $types .= "d";
+            } else {
+                $types .= "s";
+            }
+        }
+        $stmt->bind_param($types, ...array_values($where_array));
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Close statement and connection
+        $stmt->close();
+
+        // Return the result object
+        if ($result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row;
+        } else {
+            return null;
+        }
+    }
+    protected function selectWhereAndDesc($table_name, $where_array)
+    {
+        $dbconn = $this->connect();
+
+        // Build query string
+        $query = "SELECT * FROM $table_name WHERE ";
+        $where_clause = array();
+        foreach ($where_array as $key => $value) {
+            if (strpos($value, '%') !== false) {
+                $where_clause[] = "$key LIKE ?";
+            } else {
+                $where_clause[] = "$key = ?";
+            }
+        }
+        $query .= implode(" AND ", $where_clause);
+
+        // Add ORDER BY id DESC LIMIT 1 clause
+        $query .= " ORDER BY id DESC";
+
+        // Prepare the statement
+        $stmt = $dbconn->prepare($query);
+
+        // Bind parameters
+        $types = "";
+        foreach ($where_array as $value) {
+            if (is_int($value)) {
+                $types .= "i";
+            } elseif (is_double($value)) {
+                $types .= "d";
+            } else {
+                $types .= "s";
+            }
+        }
+        $stmt->bind_param($types, ...array_values($where_array));
+
+        // Execute the statement
+        $stmt->execute();
+
+        // Get the result
+        $result = $stmt->get_result();
+
+        // Close statement and connection
+        $stmt->close();
+
+
+        // Return the result object
+        return $result;
+    }
+
+    public function invoiceLock()
+    {
         $dbconn = $this->connect();
         $stmt = $dbconn->prepare("SELECT * FROM sales FOR UPDATE");
         $stmt->execute();
         $stmt->close();
-        $dbconn->close();
     }
-    public function invoiceUnlock(){
+    public function invoiceUnlock()
+    {
         $dbconn = $this->connect();
         $stmt = $dbconn->prepare("UNLOCK TABLES");
         $stmt->execute();
         $stmt->close();
-        $dbconn->close();
     }
 }

@@ -61,6 +61,17 @@
             </div><!-- /.col -->
             "; 
           }  
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/sales_history.php'){
+            echo "<h1 class='m-0'>Today Sales History ("; echo date('d-m-Y');echo ")</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='sales_history.php'>Today Sales</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }  
           ?>
             
          

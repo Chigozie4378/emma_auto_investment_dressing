@@ -57,16 +57,16 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                         <?php
                         $select_sales_details = $ctr->showSalesDetails($_SESSION["invoice_no"]);
                         while ($result_sales_histories = mysqli_fetch_array($select_sales_details)) { ?>
-                        <tr>
-                            <td><?php echo ++$id ?></td>
-                            <td><b><?php echo $result_sales_histories["quantity"] ?></b></td>
-                            <td><?php echo $result_sales_histories["productname"] ?></td>
-                            <td><?php echo $result_sales_histories["price"] ?></td>
-                            <td><?php echo $result_sales_histories["amount"] ?></td>
+                            <tr>
+                                <td><?php echo ++$id ?></td>
+                                <td><b><?php echo $result_sales_histories["quantity"] ?></b></td>
+                                <td><?php echo $result_sales_histories["productname"] ?></td>
+                                <td><?php echo $result_sales_histories["price"] ?></td>
+                                <td><?php echo $result_sales_histories["amount"] ?></td>
                             </tr>
                         <?php  }
                         ?>
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -81,7 +81,7 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                     <table class="table">
                         <tbody>
                             <tr>
-                                <td  colspan="4" ></td>
+                                <td colspan="4"></td>
                                 <th>Total Amount:</th>
                                 <td>#<?php echo $result_sales['total'] ?></td>
                             </tr>
@@ -90,14 +90,14 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                                 <td>#<?php echo $result_sales['cash'] ?></td>
                                 <th>Transfer:</th>
                                 <td>#<?php echo  $result_sales['transfer'] ?> <?php $result_transfer = mysqli_fetch_array($ctr->showTransfer($_SESSION["invoice_no"]));
-                                    echo $result_transfer['bank'] ?></td>
+                                                                                echo $result_transfer['bank'] ?></td>
                                 <th>POS:</th>
                                 <td>#<?php echo $result_sales['pos'] ?> <?php $result_pos = mysqli_fetch_array($ctr->showPos($_SESSION["invoice_no"]));
-                                    echo $result_pos['pos_type'] ?></td>
-                                
+                                                                        echo $result_pos['pos_type'] ?></td>
+
                             </tr>
                             <tr>
-                                
+
                                 <th>POS Charges:</th>
                                 <td>#<?php echo $result_pos['pos_charges'] ?></td>
                                 <th>Transport:</th>
@@ -106,10 +106,10 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                             <tr>
                                 <td colspan="4"></td>
                                 <th>Total Paid:</th>
-                                <td>#<?php echo (int)$result_sales['total_payment'] + (int)$result_pos['pos_charges']?></td>
+                                <td>#<?php echo (int)$result_sales['total_payment'] + (int)$result_pos['pos_charges'] ?></td>
                             </tr>
                             <tr>
-                            <td colspan="4"></td>
+                                <td colspan="4"></td>
                                 <th>Balance:</th>
                                 <td>#<?php echo $result_sales['balance'] ?></td>
                             </tr>
@@ -175,7 +175,6 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-
                 <input onclick="window.print()" name="print" type="submit" class="toggle btn btn-primary d-print-none" value="print">
                 </form>
 
@@ -184,11 +183,11 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
         </div>
     </section>
 </div>
-<?php 
+<?php
 $ctr->printInvoice($result_sales["customer_name"], $result_sales["customer_address"], $result_sales["invoice_no"], $_POST["supplied_by"], $_POST["checked_by"]);
 ?>
 <script>
-        function printpage() {
-            window.print()
-        }
-    </script>
+    function printpage() {
+        window.print()
+    }
+</script>

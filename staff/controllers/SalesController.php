@@ -65,9 +65,8 @@ class SalesController extends Controller
                 $deposit = $_POST["deposit"];
                 $balance = $_POST["balance"];
                 $total = $_POST["tot"];
-                // $staff = $_SESSION["stafffullname"];
-                // $username = $_SESSION["staffusername"];hi
-                $staff = "hi name";
+                $staff_fullname = $_SESSION["staff_firstname"]." ".$_SESSION["staff_lastname"];
+                $username = $_SESSION["staff_username"];
                 $username = "username";
                 $status = "pending";
                 if ($_POST["cash"] == 0 && $_POST["transfer"] == 0 && $_POST["pos"] == 0 && $_POST["balance"] != 0) {
@@ -142,16 +141,16 @@ class SalesController extends Controller
                     $_SESSION["invoice_no"] = $invoice_no2;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
-                        $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff, $date);
+                        $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff_fullname, $date);
                     }
                     
                     if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
                         $pos_charges = $_POST["pos_charges"];
                         $pos_type = $_POST["pos_type"];
-                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff, $date);
+                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff_fullname, $date);
                     }
                   
-                    $this->insert('sales', $customer_name, $customer_address, $invoice_no2,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff, $date, $username);
+                    $this->insert('sales', $customer_name, $customer_address, $invoice_no2,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff_fullname, $date, $username);
 
                     // debit 
                     $comment = "New Goods Bought";
@@ -176,14 +175,14 @@ class SalesController extends Controller
 
                                 $this->updates(
                                     "debit",
-                                    U::col("total = $new_total", "deposit= $new_deposit", "balance= $new_balance1", "staff = $staff", "date = $date"),
+                                    U::col("total = $new_total", "deposit= $new_deposit", "balance= $new_balance1", "staff = $staff_fullname", "date = $date"),
                                     U::where("customer_name = $customer_name", "customer_address = $customer_address")
                                 );
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total, $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total, $deposit, $new_balance1, $comment, $staff_fullname, $date);
                             } else {
-                                $this->insert("debit", $customer_name, $customer_address, $total, $deposit, $balance, $staff, $date);
+                                $this->insert("debit", $customer_name, $customer_address, $total, $deposit, $balance, $staff_fullname, $date);
                                 $this->trashWhere("debit", "balance = 0");
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total,  $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no2, $total,  $deposit, $new_balance1, $comment, $staff_fullname, $date);
                             }
                         }
                     }
@@ -236,14 +235,14 @@ class SalesController extends Controller
                     $_SESSION["invoice_no"] = $invoice_no;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
-                        $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff, $date);
+                        $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff_fullname, $date);
                     }
                     if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
                         $pos_charges = $_POST["pos_charges"];
                         $pos_type = $_POST["pos_type"];
-                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff, $date);
+                        $this->insert('pos', $pos_type, $invoice_no2, $pos, $pos_charges, $staff_fullname, $date);
                     }
-                    $this->insert('sales', $customer_name, $customer_address, $invoice_no,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff, $date, $username);
+                    $this->insert('sales', $customer_name, $customer_address, $invoice_no,  $customer_type, $bill_type, $total, $cash, $transfer, $pos, $old_deposit, $deposit, $transport, $balance, $staff_fullname, $date, $username);
 
                     // debit 
                     $comment = "New Goods Bought";
@@ -269,14 +268,14 @@ class SalesController extends Controller
 
                                 $this->updates(
                                     "debit",
-                                    U::col("total = $new_total", "deposit= $new_deposit", "balance= $new_balance1", "staff = $staff", "date = $date"),
+                                    U::col("total = $new_total", "deposit= $new_deposit", "balance= $new_balance1", "staff = $staff_fullname", "date = $date"),
                                     U::where("customer_name = $customer_name", "customer_address = $customer_address")
                                 );
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff_fullname, $date);
                             } else {
-                                $this->insert("debit", $customer_name, $customer_address, $total, $deposit, $balance, $staff, $date);
+                                $this->insert("debit", $customer_name, $customer_address, $total, $deposit, $balance, $staff_fullname, $date);
                                 $this->trashWhere("debit", "balance = 0");
-                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff, $date);
+                                $this->insert("debit_histories", $customer_name, $customer_address, $invoice_no, $total, $deposit, $new_balance1, $comment, $staff_fullname, $date);
                             }
                         }
                     }
