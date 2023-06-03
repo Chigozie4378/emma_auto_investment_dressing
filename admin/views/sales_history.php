@@ -13,7 +13,6 @@ $ctr = new SalesHistoryController();
 
                 <div class="card-body">
                     <div class="row">
-
                         <div class="col-md-12 d-print-none">
                             <div class="form-inline">
                                 <div class="input-group mb-3">
@@ -34,10 +33,6 @@ $ctr = new SalesHistoryController();
                                         <span class="input-group-text"><i class="fa fa-search"></i></span>
                                     </div>
                                 </div>
-                                <!-- <input type="search" name="search" class="form-control float-right" id="date" onkeyup="staffName(this.value)" placeholder="Search by Staff Name">&nbsp;&nbsp;&nbsp;
-
-                                <input type="search" name="search" class="form-control float-right" id="name" onkeyup="customerName(this.value)" placeholder="Search Customer Name">&nbsp;&nbsp;&nbsp;
-                                <input type="search" name="search" class="form-control float-right" id="address" onkeyup="customerAddress(this.value,getElementById('name').value)" placeholder="Search Address"> -->
                             </div>
                         </div>
                     </div>

@@ -12,6 +12,16 @@ class SalesHistoryController extends Controller
         $date = date("d-m-Y");
         return $this->fetchWhereAndDesc('sales', "date=$date");
     }
+    public function searchRecord($date)
+    {
+
+        return $this->fetchWhereLikeAnd("sales", "date=$date");
+    }
+    public function searchRecordInvoice($date, $invoice_no)
+    {
+
+        return $this->fetchWhereLikeAnd("sales", "date=$date", "invoice_no = $invoice_no");
+    }
     public function searchSalesCustomerName($customer_name)
     {
         $date = date("d-m-Y");
@@ -32,6 +42,7 @@ class SalesHistoryController extends Controller
         return $this->fetchWhereLikeAnd("sales", "staff = $staff_name", "date=$date");
     }
 
+    // SUm
     public function sumTotal()
     {
         $date = date("d-m-Y");
@@ -68,6 +79,7 @@ class SalesHistoryController extends Controller
         return $this->fetchWhereLikeOperation('sales', 'count', 'invoice_no', "date=$date");
     }
 
+    // Search by staff sum
     public function sumStaffTotal($staff_name)
     {
         $date = date("d-m-Y");
@@ -97,6 +109,39 @@ class SalesHistoryController extends Controller
     {
         $date = date("d-m-Y");
         return $this->fetchWhereLikeOperation('sales', 'sum', 'balance', "date=$date", "staff = $staff_name");
+    }
+
+    // Search by Date Sum
+
+    public function sumDateTotal($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'total', "date=$date");
+    }
+    public function sumDateCash($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'cash', "date=$date");
+    }
+    public function sumDateTransfer($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'transfer', "date=$date");
+    }
+    public function sumDatePos($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'pos', "date=$date");
+    }
+    public function sumDatePayment($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'total_payment', "date=$date");
+    }
+    public function sumDateDebit($date)
+    {
+        
+        return $this->fetchWhereLikeOperation('sales', 'sum', 'balance', "date=$date");
     }
 
 

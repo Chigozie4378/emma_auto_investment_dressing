@@ -59,6 +59,16 @@
             </a>
           </li>
           <li class="nav-item">
+            <a href="sales_record.php" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/sales_record.php')) {
+                                                  echo "active";
+                                                } ?>">
+              <i class="nav-icon fa-solid fa-people-roof"></i>
+              <p>
+                Sales Record
+              </p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="manage_user.php" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/manage_user.php')) {
                                                   echo "active";
                                                 } ?>">
@@ -68,32 +78,38 @@
               </p>
             </a>
           </li>
-          <!-- <li class="nav-item menu-open">
-            <a href="#" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/wholesale.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/retail.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment/director/cartoon.php')) {
+          <li class="nav-item menu-open">
+            <a href="#" class="nav-link <?php if (($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_history.php') or ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_book.php')) {
                                           echo "active";
                                         } ?>">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
+              <i class="nav-icon fa fa-credit-card"></i>
               <p>
-                Product
+                Manage Debit
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="./index.html" class="nav-link active">
+                <a href="./debit.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit.php'){ echo "active"; } ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>View Product</p>
+                  <p>Debit</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="./index2.html" class="nav-link">
+                <a href="./debit_history.php" class="nav-link  <?php if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_history.php'){ echo "active"; } ?>">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Add Product</p>
+                  <p>Debit History</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="./debit_book.php" class="nav-link <?php if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_book.php'){ echo "active"; } ?>">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Debit Book</p>
                 </a>
               </li>
 
             </ul>
-          </li> -->
+          </li>
 
           <!-- <li class="nav-item">
             <a href="pages/calendar.html" class="nav-link">

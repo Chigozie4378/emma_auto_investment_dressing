@@ -456,14 +456,29 @@ class Model extends DB
         return $result;
     }
 
-    public function invoiceLock()
+    protected function selectDebitHistories()
+    {
+        return mysqli_query($this->connect(), "SELECT * FROM debit_histories WHERE id IN (SELECT MAX(id) FROM debit_histories GROUP BY customer_name, customer_address)");
+    }
+    protected function selectDebitHistoryName($customer_name)
+    {
+        $select =  mysqli_query($this->connect(), "SELECT * FROM debit_histories WHERE customer_name LIKE '%$customer_name%'  AND id IN (SELECT MAX(id) FROM debit_histories GROUP BY customer_name, customer_address)");
+        return $select;
+    }
+    protected function selectDebitHistoryAddress($customer_name, $customer_address)
+    {
+        $select =  mysqli_query($this->connect(), "SELECT * FROM debit_histories WHERE customer_name LIKE '%$customer_name%' AND customer_address LIKE '%$customer_address%'  AND id IN (SELECT MAX(id) FROM debit_histories GROUP BY customer_name, customer_address)");
+        return $select;
+    }
+
+    protected function invoiceLock()
     {
         $dbconn = $this->connect();
         $stmt = $dbconn->prepare("SELECT * FROM sales FOR UPDATE");
         $stmt->execute();
         $stmt->close();
     }
-    public function invoiceUnlock()
+    protected function invoiceUnlock()
     {
         $dbconn = $this->connect();
         $stmt = $dbconn->prepare("UNLOCK TABLES");

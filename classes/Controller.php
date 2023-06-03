@@ -124,17 +124,35 @@ class Controller extends Model
     $this->updateData($table, $update_columns, $where_columns);
   }
   protected function fetchWhereLikeOperation($table_name, $operation, $column_name, ...$where_clauses)
-    {
-        $where_array = array();
-        foreach ($where_clauses as $where_clause) {
-            $parts = explode('=', $where_clause);
-            $key = trim($parts[0]);
-            $value = trim($parts[1]);
-            $where_array[$key] = '%' . $value . '%';
-        }
-
-        return $this->selectWhereOperation($table_name, $where_array, $operation, $column_name);
+  {
+    $where_array = array();
+    foreach ($where_clauses as $where_clause) {
+      $parts = explode('=', $where_clause);
+      $key = trim($parts[0]);
+      $value = trim($parts[1]);
+      $where_array[$key] = '%' . $value . '%';
     }
+
+    return $this->selectWhereOperation($table_name, $where_array, $operation, $column_name);
+  }
+
+
+
+  protected function showDebitHistories()
+  {
+      return  $this->selectDebitHistories();
+  }
+  protected function showDebitHistoryName($customer_name)
+  {
+      return  $this->selectDebitHistoryName($customer_name);
+  }
+  protected function showDebitHistoryAddress($customer_name, $customer_address)
+  {
+      return  $this->selectDebitHistoryAddress($customer_name, $customer_address);
+  }
+
+
+
 
   protected function lockInvoice()
   {

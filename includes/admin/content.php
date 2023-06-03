@@ -72,6 +72,50 @@
             </div><!-- /.col -->
             "; 
           }  
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/sales_record.php'){
+            echo "<h1 class='m-0'>Sales Record ("; echo date('d-m-Y');echo ")</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='sales_record.php'>Sales Record</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }  
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit.php'){
+            echo "<h1 class='m-0'>Debit List</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='debit.php'>Debit List</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_history.php'){
+            echo "<h1 class='m-0'>Debit Histories</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='debit_history.php'>Debit Histories</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_book.php'){
+            echo "<h1 class='m-0'>Record Debit Book</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'><a href='debit_book.php'>Debit Book</a></li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
           ?>
             
          
