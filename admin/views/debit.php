@@ -83,7 +83,7 @@ $ctr = new DebitController();
                                                     <?php echo $row['date'] ?>
                                                 </td>
                                                 <td class="text-center"><a href="edit_debit.php?id=<?php echo $row['id'] ?>">Pay</a></td>
-                                                <td class=" text-center"><a href="settle_debit_details.php?customer_name=<?php echo $row['customer_name'] ?>&address=<?php echo $row['address'] ?>"><i class="fa fa-eye text-primary"></i></a></td>
+                                                <td class=" text-center"><a href="debit_details.php?customer_name=<?php echo $row['customer_name'] ?>&customer_address=<?php echo $row['customer_address'] ?>"><i class="fa fa-eye text-primary"></i></a></td>
 
                                             </tr>
                                         </capital>

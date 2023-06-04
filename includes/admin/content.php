@@ -116,6 +116,28 @@
             </div><!-- /.col -->
             "; 
           }
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/edit_debit.php'){
+            echo "<h1 class='m-0'>Settle Debit</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'>Settle Debit</li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/debit_details.php'){
+            echo "<h1 class='m-0'>Debit Details</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'>Debit Details</li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
           ?>
             
          
