@@ -54,7 +54,7 @@ echo $date_debit['value']?>"></div>
                 <?php echo $row['customer_name'] ?>
             </td>
             <td style="text-transform:uppercase">
-                <?php echo $row['address'] ?>
+                <?php echo $row['customer_address'] ?>
             </td>
             <td style="text-transform:uppercase">
                 <?php echo $row['payment_type'] ?>
@@ -77,7 +77,7 @@ echo $date_debit['value']?>"></div>
             <td style="text-transform:uppercase">
                 <?php echo $row['date'] ?>
             </td>
-            <td class="d-print-none text-center"><a href="search_record_details.php?invoice=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&address=<?php echo $row['address'] ?>"><i class="fa fa-eye"></i></a>
+            <td class="d-print-none text-center"><a href="sales_history_details.php?invoice_no=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&customer_address=<?php echo $row['customer_address'] ?>"><i class="fa fa-eye"></i></a>
                                                 </td>
         </tr>
         </capital>

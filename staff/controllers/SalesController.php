@@ -356,7 +356,7 @@ class SalesController extends Controller
     public function printInvoice($customer_name, $customer_address, $invoice_no, $supplied_by, $checked_by){
 
         if (isset($_POST["print"])) {
-            $this->insert("supplied", $customer_name, $customer_address, $invoice_no, $supplied_by, $checked_by);
+            // $this->insert("supplied", $customer_name, $customer_address, $invoice_no, $supplied_by, $checked_by);
             Session::unset("invoice_no");
             Session::unset("customer_name");
             Session::unset("customer_address");

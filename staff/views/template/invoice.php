@@ -144,18 +144,19 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                 <form action="" method="post">
                     <div class="form-inline" style="float: right;">
                         <label for="pwd">Supplied By:</label>
-                        <select class="form-control" name="supplied_by" style="width:210px">
+                        <input type="text" name="checked_by" class="form-control" id="pwd">
+                        <!-- <select class="form-control" name="supplied_by" style="width:210px">
                             <option value=""></option>
                             <?php
-                            $ctr1 = new UserController();
-                            while ($row = mysqli_fetch_array($ctr1->showUsers())) { ?>
-                                <option value="<?php echo $row['lastname'] ?>">
-                                    <?php echo  $row['lastname'] ?>
-                                </option>
+                            // $ctr1 = new UserController();
+                            // while ($row = mysqli_fetch_array($ctr1->showUsers())) { ?>
+                            //     <option value="<?php echo $row['lastname'] ?>">
+                            //         <?php echo  $row['lastname'] ?>
+                            //     </option>
                             <?php
-                            }
+                            // }
                             ?>
-                        </select>
+                        </select> -->
                     </div>
             </div>
         </div>
@@ -177,7 +178,6 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
             <div class="col-md-12 text-center">
                 <input onclick="window.print()" name="print" type="submit" class="toggle btn btn-primary d-print-none" value="print">
                 </form>
-
 
             </div>
         </div>

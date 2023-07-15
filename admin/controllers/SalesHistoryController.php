@@ -29,7 +29,7 @@ class SalesHistoryController extends Controller
         return $this->fetchWhereLikeAnd("sales", "customer_name = $customer_name", "date=$date");
     }
 
-    public function searchSalesCustomerAddress($customer_name,$customer_address)
+    public function searchSalesCustomerAddress($customer_name, $customer_address)
     {
         $date = date("d-m-Y");
         return $this->fetchWhereLikeAnd("sales", "customer_name = $customer_name", "customer_address = $customer_address", "date=$date");
@@ -115,32 +115,32 @@ class SalesHistoryController extends Controller
 
     public function sumDateTotal($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'total', "date=$date");
     }
     public function sumDateCash($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'cash', "date=$date");
     }
     public function sumDateTransfer($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'transfer', "date=$date");
     }
     public function sumDatePos($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'pos', "date=$date");
     }
     public function sumDatePayment($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'total_payment', "date=$date");
     }
     public function sumDateDebit($date)
     {
-        
+
         return $this->fetchWhereLikeOperation('sales', 'sum', 'balance', "date=$date");
     }
 
@@ -170,6 +170,35 @@ class SalesHistoryController extends Controller
             );
 
             header("location:test.php");
+        }
+    }
+    public function viewSales($tablename)
+    {
+        if (isset($_GET['invoice_no'])) {
+            $invoice_no = $_GET['invoice_no'];
+            $customer_name = $_GET['customer_name'];
+            $customer_address = $_GET['customer_address'];
+
+            $row = mysqli_fetch_array($this->fetchWhereAnd("sales", "customer_name = $customer_name", "customer_address = $customer_address", "invoice_no=$invoice_no"));
+            return $row["$tablename"];
+        }
+    }
+    public function viewSalesHistories()
+    {
+        if (isset($_GET['invoice_no'])) {
+            $invoice_no = $_GET['invoice_no'];
+
+            $select = $this->fetchWhereAnd("sales_details", "invoice_no=$invoice_no");
+            return $select;
+        }
+    }
+    public function viewPosType($tablename)
+    {
+        if (isset($_GET['invoice_no'])) {
+            $invoice_no = $_GET['invoice_no'];
+
+            $row = mysqli_fetch_array($this->fetchWhereAnd("pos", "invoice_no=$invoice_no"));
+            return $row["$tablename"];
         }
     }
 }

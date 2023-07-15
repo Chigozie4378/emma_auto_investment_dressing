@@ -107,7 +107,7 @@ echo $debit['value'] ?>"></div>
                                             <td style="text-transform:uppercase">
                                                 <?php echo $row['date'] ?>
                                             </td>
-                                            <td class="text-center"><a href="sales_history_details.php?invoice=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&address=<?php echo $row['address'] ?>"><i class="fa fa-eye"></i></a>
+                                            <td class="text-center"><a href="sales_history_details.php?invoice_no=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&customer_address=<?php echo $row['customer_address'] ?>"><i class="fa fa-eye"></i></a>
                                             </td>
                                         </tr>
                                     </capital>

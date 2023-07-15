@@ -72,7 +72,7 @@ $staff_name = $_GET["staff_name"];
                     <td style="text-transform:uppercase">
                         <?php echo $row['date'] ?>
                     </td>
-                    <td class="text-center"><a href="sales_history_details.php?invoice=<?php echo $row['invoice_no'] ?>"><i class="fa fa-eye"></i></a>
+                    <td class="text-center"><a href="sales_history_details.php?invoice_no=<?php echo $row['invoice_no'] ?>"><i class="fa fa-eye"></i></a>
                     </td>
                 </tr>
             </capital>

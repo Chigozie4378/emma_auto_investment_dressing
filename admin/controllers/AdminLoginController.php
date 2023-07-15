@@ -6,7 +6,7 @@ class AdminLoginController extends Controller
     {
         if (isset($_POST["admin_login"])) {
             $username = mysqli_escape_string($this->connect(), $_POST["username"]);
-            $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
+            $password = (mysqli_escape_string($this->connect(), $_POST["password"]));
 
             $admin = $this->fetchWhereAnd("users", "username = $username", "password = $password");
             if (mysqli_num_rows($admin) > 0) {
@@ -17,7 +17,6 @@ class AdminLoginController extends Controller
                 $_SESSION["admin_firstname"] = $firstname;
                 $_SESSION["admin_lastname"] = $lastname;
                 $_SESSION["admin_username"] = $username;
-                $_SESSION["admin_lastname"] = $result['lastname'];
                 $_SESSION["admin_passport"] =  $result["passport"];
                 header("location:admin/views/index.php");
             } else {

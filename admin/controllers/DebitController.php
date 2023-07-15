@@ -154,7 +154,7 @@ class DebitController extends Controller
             $id = $_POST["id"];
             $customer_name = $_POST["customer_name"];
             $customer_address = $_POST["customer_address"];
-            $date = $_POST["date"];;
+            $date = $_POST["date"];
             $deposit = $_POST["deposit"];
             $balance = $_POST["balance"];
             $total = 0;
@@ -181,7 +181,6 @@ class DebitController extends Controller
             $result_debit = mysqli_fetch_array($select_debit);
             $new_balance = (int)$result_debit["balance"]-(int)$pay;
             $new_deposit = (int)$pay + (int)$result_debit["deposit"];
-            // $this->updateDebitinput($id, $pay, $staff, $date);
             $this->updates(
                 "debit",
                 U::col("deposit= $new_deposit", "balance= $new_balance", "staff= $staff", "date= $date"),

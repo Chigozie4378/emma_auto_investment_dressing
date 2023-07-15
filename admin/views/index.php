@@ -1,7 +1,6 @@
 <?php
 include_once "../../includes/admin/header.php";
-$ctr = new StockController();
-$ctr->delete();
+$ctr = new SalesHistoryController();
 ?>
 <style>
   .name {
@@ -226,34 +225,63 @@ $ctr->delete();
         <table class="table  table-hover">
           <thead>
             <tr>
-              <th>S/N</th>
-              <th>Product name</th>
-              <th>Picture</th>
-              <th>Quantity</th>
-              <th>Wholesale Price</th>
-              <th>Retail Price</th>
-
-              <th>Actions</th>
+              <th>S/N </th>
+              <th>Customer Name</th>
+              <th>Address</th>
+              <th>Payment Type</th>
+              <th>Customer Type</th>
+              <th>Total</th>
+              <th>Paid</th>
+              <th>Balance</th>
+              <th>Staff</th>
+              <th style="width: 10%;">Date</th>
+              <th style="text-align:center">View</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="table">
             <?php
-            $select = $ctr->index();
-            while ($result = mysqli_fetch_array($select)) { ?>
-              <tr>
-                <td><?php echo ++$sn ?></td>
-                <td onblur="editName('<?php echo $result['product_id'] ?>',this.textContent)" onclick="getFileName(this.textContent)" contenteditable><?php echo $result["productname"] ?></td>
-                <td><img src="<?php echo $result["filepath"] ?>" height=50 width="50" alt="item"></td>
-                <td onblur="editQuantity('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["quantity"] ?></td>
-                <td onblur="editWprice('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["wprice"] ?></td>
-                <td onblur="editRprice('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["rprice"] ?></td>
-
-                <td><a href="show_stock.php?product_id=<?php echo $result["product_id"] ?>"><i class="fa fa-eye"></i></a></td>
-              </tr>
+            $id = 0;
+            $select_sales = $ctr->showDesc();
+            while ($row = mysqli_fetch_array($select_sales)) { ?>
+              <capital>
+                <tr>
+                  <td style="text-transform:uppercase">
+                    <?php echo ++$id ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['customer_name'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['customer_address'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['payment_type'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['customer_type'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['total'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['deposit'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['balance'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['staff'] ?>
+                  </td>
+                  <td style="text-transform:uppercase">
+                    <?php echo $row['date'] ?>
+                  </td>
+                  <td class="text-center"><a href="sales_history_details.php?invoice_no=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&customer_address=<?php echo $row['customer_address'] ?>"><i class="fa fa-eye"></i></a>
+                  </td>
+                </tr>
+              </capital>
             <?php }
             ?>
           </tbody>
-
         </table>
       </div>
       <!-- /.card-body -->

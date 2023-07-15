@@ -167,10 +167,12 @@ $ctr = new SalesController();
                         <?php } elseif ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/staff/views/carton.php') { ?>
                             <input name="customer_type" type="hidden" value="carton">
                         <?php } ?>
-                        <div class="form-inline">
-                            <label for="">Customer Name: </label>
-                            <div class="row">
-                                <div class="col-md-3">
+
+
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="">Title: </label>
                                     <select name="title" id="title" class="form-control" required>
                                         <option value=""></option>
                                         <option value="MR">MR</option>
@@ -180,20 +182,25 @@ $ctr = new SalesController();
                                         <option value="ALHAJA">ALHAJA</option>
                                     </select>
                                 </div>
-                                <div class="col-md-9">
+
+                            </div>
+                            <div class="col-md-9">
+                                <div class="form-group">
+                                    <label for="">Customer Name: </label>
                                     <input type="text" id="customer_name" class="form-control" name="customer_name" required>
                                 </div>
                             </div>
-
-
                         </div>
+
+
+
                         <div class="form-froup">
                             <label for="">Customer Address: </label>
                             <input type="text" id="customer_address" name="customer_address" class="form-control" required>
                         </div>
-                        
-                            <input type="hidden" id="invoice_no" name="invoice_no" class="form-control" value="<?php $ctr->invoiceNo() ?>" required readonly>
-                      
+
+                        <input type="hidden" id="invoice_no" name="invoice_no" class="form-control" value="<?php $ctr->invoiceNo() ?>" required readonly>
+
                         <div class="form-froup">
                             <label for="">Cash: </label>
                             <input class="form-control" style="width:100%;box-sizing:border-box" onkeyup="cashCalc(this.value,document.getElementById('pos').value,document.getElementById('transfer').value,document.getElementById('tot').value,document.getElementById('old_deposit').value,document.getElementById('transport').value)" onclick="this.select()" type="number" name="cash" id="cash" value="0" required>

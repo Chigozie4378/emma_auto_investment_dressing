@@ -27,4 +27,8 @@ class UserController extends Controller
             }
         }
     }
+    public function showUsers()
+    {
+        return $this->fetchAll('users');
+    }
 }
