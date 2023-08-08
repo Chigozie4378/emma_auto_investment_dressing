@@ -1,6 +1,7 @@
 <?php
 include_once "../../includes/admin/header.php";
 $ctr = new SalesHistoryController();
+$ctr_dashboard = new DashboardController();
 ?>
 <style>
   .name {
@@ -10,6 +11,25 @@ $ctr = new SalesHistoryController();
     overflow: hidden;
     text-overflow: ellipsis;
   }
+
+
+  .carousel-control-prev-icon,
+  .carousel-control-next-icon {
+    position: absolute;
+    top: 50%;
+    width: 30px;
+    height: 30px;
+    transform: translateY(-50%);
+    background-color: rgba(188, 145, 145, 0.5);
+  }
+
+  .carousel-control-prev-icon {
+    left: 10px;
+  }
+
+  .carousel-control-next-icon {
+    right: 10px;
+  }
 </style>
 <!-- Small boxes (Stat box) -->
 <div class="row">
@@ -17,14 +37,18 @@ $ctr = new SalesHistoryController();
     <!-- small box -->
     <div class="small-box bg-info">
       <div class="inner">
-        <h3>150</h3>
+        <h3><?php $customer_count = $ctr_dashboard->countCustomer();
+            if (!$customer_count['value'] == 0) {
+              echo $customer_count['value'];
+            } ?>
+        </h3>
 
         <p>Total Customers</p>
       </div>
       <div class="icon">
-        <i class="ion ion-bag"></i>
+        <i class="ion ion-person-add"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="sales_history.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -32,14 +56,15 @@ $ctr = new SalesHistoryController();
     <!-- small box -->
     <div class="small-box bg-success">
       <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <h3><?php $sumSales = $ctr_dashboard->sumSales();
+            echo $sumSales['value'] ?></h3>
 
         <p>Total sales</p>
       </div>
       <div class="icon">
-        <i class="ion ion-stats-bars"></i>
+        <i class="ion ion-bag"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="sales_history.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -47,42 +72,45 @@ $ctr = new SalesHistoryController();
     <!-- small box -->
     <div class="small-box bg-warning">
       <div class="inner">
-        <h3>44</h3>
+        <h3><?php $sumCash = $ctr_dashboard->sumCash();
+            echo $sumCash['value'] ?></h3>
 
         <p>Total Cash</p>
       </div>
       <div class="icon">
-        <i class="ion ion-person-add"></i>
+        <i class="ion ion-stats-bars"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="sales_history.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <div class="col-lg-2 col-6">
     <!-- small box -->
     <div class="small-box bg-success">
       <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <h3><?php $sumTransfer = $ctr_dashboard->sumTransfer();
+            echo $sumTransfer['value'] ?></h3>
 
         <p>Total Transfer</p>
       </div>
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="sales_history.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <div class="col-lg-2 col-6">
     <!-- small box -->
     <div class="small-box bg-success">
       <div class="inner">
-        <h3>53<sup style="font-size: 20px">%</sup></h3>
+        <h3><?php $sumPos = $ctr_dashboard->sumPos();
+            echo $sumPos['value'] ?></h3>
 
         <p>Total POS</p>
       </div>
       <div class="icon">
         <i class="ion ion-stats-bars"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="sales_history.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
@@ -90,19 +118,25 @@ $ctr = new SalesHistoryController();
     <!-- small box -->
     <div class="small-box bg-danger">
       <div class="inner">
-        <h3>65</h3>
+        <h3><?php $sumDebit = $ctr_dashboard->sumDebit();
+            echo $sumDebit['value'] ?></h3>
 
         <p>Total Debit</p>
       </div>
       <div class="icon">
         <i class="ion ion-pie-graph"></i>
       </div>
-      <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+      <a href="debit.php" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
     </div>
   </div>
   <!-- ./col -->
 </div>
 <!-- /.row -->
+<?php
+$cards = $ctr_dashboard->carouselDispplay();
+
+?>
+
 
 <!-- Main row -->
 <div class="row">
@@ -110,107 +144,65 @@ $ctr = new SalesHistoryController();
   <section class="col-lg-12 connectedSortable">
     <!-- Custom tabs (Charts with tabs)-->
     <div class="card">
+
+
       <div class="card-header">
         <h3 class="card-title">
           <i class="fas fa-chart-pie mr-1"></i>
-          Sales
+          Products
         </h3>
-        <div class="card-tools">
-          <ul class="nav nav-pills ml-auto">
-            <li class="nav-item">
-              <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Area</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#sales-chart" data-toggle="tab">Donut</a>
-            </li>
-          </ul>
-        </div>
+
       </div><!-- /.card-header -->
+
       <div class="card-body">
         <div class="tab-content p-0">
-          <div class="row">
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/1679649093109.jpg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb ligh </span>
+          <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="5000">
+            
+            <ol class="carousel-indicators">
+              <?php
+              if (!is_array($cards)) {
+                $cards = [];
+              }
 
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
+              for ($i = 0; $i < count($cards); $i += 6) :
+              ?>
+                <li data-target="#carouselExampleIndicators" data-slide-to="<?= $i / 6 ?>" class="<?= $i === 0 ? 'active' : '' ?>"></li>
+              <?php endfor; ?>
+            </ol>
 
+            <div class="carousel-inner">
+              <?php for ($i = 0; $i < count($cards); $i += 6) : ?>
+                <div class="carousel-item <?= $i === 0 ? 'active' : '' ?>">
+                  <div class="row">
+                    <?php for ($j = $i; $j < $i + 6 && $j < count($cards); $j++) : ?>
+                      <div class="col-md-2">
+                        <div class="card" style="width:100%;" onclick="showImageModal(event, '<?= $cards[$j]['filepath'] ?>')">
+                          <img class="card-img-top" src="<?= $cards[$j]['filepath'] ?>" alt="Card image" height="150">
+                          <div class="card-body" style=" height:150px;">
+                            <span class="name"><?= $cards[$j]['productname'] ?> </span>
+                            <span class="price">Retail Price: <b><?= $cards[$j]['rprice'] ?></b></span><br>
+                            <span class="price">WS Price: <b><?= $cards[$j]['wprice'] ?></b></span><br>
+                            <span class="price">Qty: <b><?= $cards[$j]['quantity'] ?></b></span><br>
+                          </div>
+                        </div>
+                      </div>
+                    <?php endfor; ?>
+                  </div>
                 </div>
-              </div>
-
+              <?php endfor; ?>
             </div>
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/apple-iphone-14-pro-max-128gb--nbspdeep-purple.jpg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb light 1Bulb light 1 Bulb light 1 Bulb light 1 </span>
-
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/photo-1601784551446-20c9e07cdbdb.jpeg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb light 1Bulb light 1 Bulb light 1 Bulb light 1 </span>
-
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/s-l1600.jpg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb light 1Bulb light 1 Bulb light 1 Bulb light 1 </span>
-
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/1679649540868.jpg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb light 1Bulb light 1 Bulb light 1 Bulb light 1 </span>
-
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
-
-                </div>
-              </div>
-            </div>
-            <div class="col-md-2">
-              <div class="card" style="width:100%;">
-                <img class="card-img-top" src="../../assets/images/1679649540854.jpg" alt="Card image" height="150">
-                <div class="card-body" style=" height:150px;">
-                  <span class="name">16 Bulb light 1Bulb light 1 Bulb light 1 Bulb light 1 </span>
-
-                  <span class="price">Price: <b>#2000</b></span><br>
-                  <span class="price">Qty: <b>200</b></span><br>
-                  <a href="#" class="nav-link">More-></a>
-
-                </div>
-              </div>
-            </div>
+            <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev" id="carouselPrev">
+              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+              <span class="sr-only">Previous</span>
+            </a>
+            <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next" id="carouselNext">
+              <span class="carousel-control-next-icon" aria-hidden="true"></span>
+              <span class="sr-only">Next</span>
+            </a>
           </div>
         </div>
-      </div><!-- /.card-body -->
+      </div>
+
     </div>
     <!-- /.card -->
 
@@ -241,7 +233,7 @@ $ctr = new SalesHistoryController();
           <tbody id="table">
             <?php
             $id = 0;
-            $select_sales = $ctr->showDesc();
+            $select_sales = $ctr_dashboard->last50SalesHistory();
             while ($row = mysqli_fetch_array($select_sales)) { ?>
               <capital>
                 <tr>
@@ -288,9 +280,44 @@ $ctr = new SalesHistoryController();
 
     </div>
     <!--/.direct-chat -->
+    <!-- Image Modal -->
+    <div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <img id="modalImage" src="" alt="Card image" style="width: 100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
   </section>
 </div>
 
 <?php
 include_once "../../includes/admin/footer.php";
 ?>
+<script>
+  function showImageModal(event, imagePath) {
+    // Set the source of the image in the modal
+    document.getElementById('modalImage').src = imagePath;
+
+    // Show the modal
+    $('#imageModal').modal('show');
+
+    // Disable the carousel controls
+    document.getElementById('carouselPrev').style.pointerEvents = 'none';
+    document.getElementById('carouselNext').style.pointerEvents = 'none';
+  }
+
+  // Listen for the hidden.bs.modal event to re-enable the carousel controls
+  $('#imageModal').on('hidden.bs.modal', function() {
+    document.getElementById('carouselPrev').style.pointerEvents = 'auto';
+    document.getElementById('carouselNext').style.pointerEvents = 'auto';
+  });
+</script>

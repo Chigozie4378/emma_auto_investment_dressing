@@ -61,7 +61,7 @@ $staff_name = $_GET["staff_name"];
                         <?php echo $row['total'] ?>
                     </td>
                     <td style="text-transform:uppercase">
-                        <?php echo $row['deposit'] ?>
+                        <?php echo $row['total_payment'] ?>
                     </td>
                     <td style="text-transform:uppercase">
                         <?php echo $row['balance'] ?>

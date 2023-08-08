@@ -6,7 +6,7 @@ class AdminLoginController extends Controller
     {
         if (isset($_POST["admin_login"])) {
             $username = mysqli_escape_string($this->connect(), $_POST["username"]);
-            $password = (mysqli_escape_string($this->connect(), $_POST["password"]));
+            $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
 
             $admin = $this->fetchWhereAnd("users", "username = $username", "password = $password");
             if (mysqli_num_rows($admin) > 0) {

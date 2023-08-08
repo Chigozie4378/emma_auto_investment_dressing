@@ -7,7 +7,7 @@ class UserController extends Controller
     public $passwordErr;
     public $userErr;
     public $user;
-  
+
     public function addUser()
     {
         if (isset($_POST["add"])) {
@@ -29,7 +29,7 @@ class UserController extends Controller
                 if ($count > 0) {
                     $this->userErr = "<strong>Danger!</strong> Invalid User Registeration.";
                 } else {
-                    $this->insert('users', $firstname, $lastname, $username, $password, $role, $file_path,"active");
+                    $this->insert('users', $firstname, $lastname, $username, $password, $role, $file_path, "active");
                     $this->user = "<div class='alert alert-success text-center'><strong>Success!</strong> admin Added Successfully.</div>";
                     echo "<script>
                      setTimeout(function(){
@@ -58,89 +58,68 @@ class UserController extends Controller
             $user = $this->fetchWhereAnd("users", "id = $id");
             $user_result = mysqli_fetch_array($user);
             echo $user_result["$table"];
-
         }
     }
     public function checkUsers($username)
     {
         return $this->fetchWhereAnd("users", "username = $username");
-        
     }
 
-   
-    public function userUpdate()
-        {
-            if (isset($_POST["edit"])) {
-                $id = mysqli_escape_string($this->connect(), $_POST["id"]);
-                $firstname = mysqli_escape_string($this->connect(), $_POST["firstname"]);
-                $lastname = mysqli_escape_string($this->connect(), $_POST["lastname"]);
-                $username = mysqli_escape_string($this->connect(), $_POST["username"]);
-                $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
-                $role = mysqli_escape_string($this->connect(), $_POST["role"]);
-                $status = mysqli_escape_string($this->connect(), $_POST["status"]);
 
-                if (!empty($_POST["password"]) and !empty($_FILES["passport"])) {
-                    $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
-                    $passport_tmp_name = $_FILES["passport"]["tmp_name"];
-                    $passport_name = $_FILES["passport"]["name"];
-                    $file_path = "../assets/passport/" . $passport_name;
-                    move_uploaded_file($passport_tmp_name, $file_path);
+    public function userUpdate()
+    {
+        if (isset($_POST["edit"])) {
+            $id = mysqli_escape_string($this->connect(), $_POST["id"]);            
+            $firstname = mysqli_escape_string($this->connect(), $_POST["firstname"]);
+            $lastname = mysqli_escape_string($this->connect(), $_POST["lastname"]);
+            $username = mysqli_escape_string($this->connect(), $_POST["username"]);
+            $role = mysqli_escape_string($this->connect(), $_POST["role"]);
+            $status = mysqli_escape_string($this->connect(), $_POST["status"]);
+            if (empty($_POST["password"])) {
+
+                if (empty($_FILES['passport']['name'])) {
                     $this->updates(
                         "users",
-                        U::col("firstname = $firstname", "lastname= $lastname","username= $username","password = $password","passport = $file_path","role = $role","status = $status"),
+                        U::col("firstname = $firstname", "lastname= $lastname", "username= $username",  "role = $role", "status = $status"),
                         U::where("id = $id")
                     );
-                    echo "<script>
-                document.getElementById('update').style.display='block';
-                setTimeout(function(){
-                    window.location = 'manage_user.php'
-                 }, 300);
-                </script>";
-                } elseif (!empty($_POST["password"])) {
-                    $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
-                    $this->updates(
-                        "users",
-                        U::col("firstname = $firstname", "lastname= $lastname","username= $username","password = $password","role = $role","status = $status"),
-                        U::where("id = $id")
-                    );
-                    echo "<script>
-                document.getElementById('update').style.display='block';
-                setTimeout(function(){
-                    window.location = 'manage_user.php'
-                 }, 300);
-                </script>";
-                } elseif (!empty($_FILES["passport"])) {
-                    $passport_tmp_name = $_FILES["passport"]["tmp_name"];
-                    $passport_name = $_FILES["passport"]["name"];
-                    $file_path = "../assets/passport/" . $passport_name;
-                    move_uploaded_file($passport_tmp_name, $file_path);
-                    $this->updates(
-                        "users",
-                        U::col("firstname = $firstname", "lastname= $lastname","username= $username","passport = $file_path","role = $role","status = $status"),
-                        U::where("id = $id")
-                    );
-                    echo "<script>
-                document.getElementById('update').style.display='block';
-                setTimeout(function(){
-                    window.location = 'manage_user.php'
-                 }, 300);
-                </script>";
                 } else {
+                    $passport_tmp_name = $_FILES["passport"]["tmp_name"];
+                    $passport_name = $_FILES["passport"]["name"];
+                    $file_path = "../../assets/passport/" . $passport_name;
+                    move_uploaded_file($passport_tmp_name, $file_path);
                     $this->updates(
                         "users",
-                        U::col("firstname = $firstname", "lastname= $lastname","username= $username","role = $role","status = $status"),
+                        U::col("firstname = $firstname", "lastname= $lastname", "username= $username", "passport = $file_path", "role = $role", "status = $status"),
                         U::where("id = $id")
                     );
-                    echo "<script>
-                document.getElementById('update').style.display='block';
-                setTimeout(function(){
-                    window.location = 'manage_user.php'
-                 }, 300);
-                </script>";
+                }
+            } else {
+                $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
+                if (empty($_FILES['passport']['name'])) {
+                    $this->updates(
+                        "users",
+                        U::col("firstname = $firstname", "lastname= $lastname", "username= $username", "password = $password", "role = $role", "status = $status"),
+                        U::where("id = $id")
+                    );
+                } else {
+                    $passport_tmp_name = $_FILES["passport"]["tmp_name"];
+                    $passport_name = $_FILES["passport"]["name"];
+                    $file_path = "../../assets/passport/" . $passport_name;
+                    move_uploaded_file($passport_tmp_name, $file_path);
+                    $this->updates(
+                        "users",
+                        U::col("firstname = $firstname", "lastname= $lastname", "username= $username", "password = $password", "passport = $file_path", "role = $role", "status = $status"),
+                        U::where("id = $id")
+                    );
                 }
             }
+            echo "<script>
+            document.getElementById('update').style.display='block';
+            setTimeout(function(){
+                window.location = 'manage_user.php'
+             }, 300);
+            </script>";
         }
-        
-    
-    
+    }
 }

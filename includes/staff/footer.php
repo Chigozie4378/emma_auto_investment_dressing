@@ -4,7 +4,7 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-md-6">
-                        <p>Copyright reserve &copy; <?php echo date("Y") ?> Emma Auto Multi-Company PLC..</p>
+                        <p>Copyright reserve &copy; <?php echo date("Y") ?> Emma Auto Multi-Services Company PLC..</p>
                     </div>
                     <div class="col-md-6 text-md-end">
                         <p>Designed by <a href="#">Sunny</a></p>

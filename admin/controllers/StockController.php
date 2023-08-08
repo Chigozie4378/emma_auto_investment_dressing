@@ -104,4 +104,9 @@ class StockController extends Controller
             U::where("product_id = $product_id")
         );
     }
+    public function searchStock($search_stock)
+    {
+
+        return $this->fetchWhereLikeAnd("stocks", "productname = $search_stock");
+    }
 }

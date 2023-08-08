@@ -168,45 +168,72 @@ $ctr = new SalesController();
                             <input name="customer_type" type="hidden" value="carton">
                         <?php } ?>
 
+                        <?php if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/staff/views/retail.php') { ?>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="">Title: </label>
+                                        <select name="title" id="title" class="form-control">
+                                            <option value=""></option>
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                            <option value="MISS">MISS</option>
+                                            <option value="ALHAJI">ALHAJI</option>
+                                            <option value="ALHAJA">ALHAJA</option>
+                                        </select>
+                                    </div>
 
-                        <div class="row">
-                            <div class="col-md-3">
-                                <div class="form-group">
-                                    <label for="">Title: </label>
-                                    <select name="title" id="title" class="form-control" required>
-                                        <option value=""></option>
-                                        <option value="MR">MR</option>
-                                        <option value="MRS">MRS</option>
-                                        <option value="MISS">MISS</option>
-                                        <option value="ALHAJI">ALHAJI</option>
-                                        <option value="ALHAJA">ALHAJA</option>
-                                    </select>
                                 </div>
-
-                            </div>
-                            <div class="col-md-9">
-                                <div class="form-group">
-                                    <label for="">Customer Name: </label>
-                                    <input type="text" id="customer_name" class="form-control" name="customer_name" required>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="">Customer Name: </label>
+                                        <input type="text" id="customer_name" class="form-control" name="customer_name">
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                            <div class="form-group">
+                                <label for="">Customer Address: </label>
+                                <input type="text" id="customer_address" name="customer_address" class="form-control">
+                            </div>
 
+                        <?php } else { ?>
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label for="">Title: </label>
+                                        <select name="title" id="title" class="form-control" required>
+                                            <option value=""></option>
+                                            <option value="MR">MR</option>
+                                            <option value="MRS">MRS</option>
+                                            <option value="MISS">MISS</option>
+                                            <option value="ALHAJI">ALHAJI</option>
+                                            <option value="ALHAJA">ALHAJA</option>
+                                        </select>
+                                    </div>
 
-                        <div class="form-froup">
-                            <label for="">Customer Address: </label>
-                            <input type="text" id="customer_address" name="customer_address" class="form-control" required>
-                        </div>
+                                </div>
+                                <div class="col-md-9">
+                                    <div class="form-group">
+                                        <label for="">Customer Name: </label>
+                                        <input type="text" id="customer_name" class="form-control" name="customer_name" required>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="">Customer Address: </label>
+                                <input type="text" id="customer_address" name="customer_address" class="form-control" required>
+                            </div>
+                        <?php } ?>
 
                         <input type="hidden" id="invoice_no" name="invoice_no" class="form-control" value="<?php $ctr->invoiceNo() ?>" required readonly>
 
-                        <div class="form-froup">
+                        <div class="form-group">
                             <label for="">Cash: </label>
                             <input class="form-control" style="width:100%;box-sizing:border-box" onkeyup="cashCalc(this.value,document.getElementById('pos').value,document.getElementById('transfer').value,document.getElementById('tot').value,document.getElementById('old_deposit').value,document.getElementById('transport').value)" onclick="this.select()" type="number" name="cash" id="cash" value="0" required>
 
                         </div>
-                        <div class="form-froup">
+                        <div class="form-group">
                             <label for="">Transfer: </label>
                             <input class="form-control" style="width:100%;box-sizing:border-box" onkeyup="transferCalc(this.value,document.getElementById('pos').value,document.getElementById('cash').value,document.getElementById('tot').value,document.getElementById('old_deposit').value,document.getElementById('transport').value)" onclick="this.select()" onkeydown="selectBank()" type="number" name="transfer" id="transfer" value="0" required>
                             <div style="margin-top: 10px;" id="select_bank"></div>
@@ -216,10 +243,10 @@ $ctr = new SalesController();
                             <input class="form-control" style="width:100%;box-sizing:border-box" onkeyup="posCalc(this.value,document.getElementById('transfer').value,document.getElementById('cash').value,document.getElementById('tot').value,document.getElementById('old_deposit').value,document.getElementById('transport').value)" onclick="this.select()" onkeydown="selectPos()" type="number" name="pos" id="pos" value="0" required>
                             <div style="margin-top: 10px;" id="select_pos"></div>
                         </div>
-                        <div class="form-froup" id="old_deposit">
+                        <div class="form-group" id="old_deposit">
                             <input style="display: none;" class="form-control" style="width:100%;box-sizing:border-box" name="old_deposit" id="old_deposit" value="0" required>
                         </div>
-                        <div class="form-froup" id="transportDiv">
+                        <div class="form-group" id="transportDiv">
                             <input style="display: none;" class="form-control" style="width:100%;box-sizing:border-box" name="transport" id="transport" value="0" required>
                         </div>
                         <div id="paidBal">

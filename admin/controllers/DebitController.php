@@ -250,4 +250,13 @@ class DebitController extends Controller
             return $select;
         }
     }
+    public function checkDebit()
+    {
+        if (isset($_GET["customer_name"]) && $_GET["customer_address"]) {
+            $customer_name = $_GET["customer_name"];
+            $customer_address =  $_GET["customer_address"];
+            $select =  $this->fetchWhereAnd("debit",  "customer_name = $customer_name", "customer_address = $customer_address");
+            return $select;
+        }
+    }
 }

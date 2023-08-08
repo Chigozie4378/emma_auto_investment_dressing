@@ -12,6 +12,19 @@ $ctr->delete();
 
     <div class="card">
         <div class="card-body">
+            <div class="row">
+                <div class="col-md-12 d-print-none">
+                    <div class="form-inline">
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control" id="search_stock" onkeyup="searchStock(this.value)" placeholder="Search Product">
+                            <div class="input-group-append">
+                                <span class="input-group-text"><i class="fa fa-search"></i></span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
             <table class="table  table-hover">
                 <thead>
                     <tr>
@@ -22,22 +35,22 @@ $ctr->delete();
                         <th>Wholesale Price</th>
                         <th>Retail Price</th>
 
-                        <th colspan="2">Actions</th>
+                        <th colspan="2">Action</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id = "stock">
                     <?php
                     $select = $ctr->index();
                     while ($result = mysqli_fetch_array($select)) { ?>
                         <tr>
                             <td><?php echo ++$sn ?></td>
                             <td onblur="editName('<?php echo $result['product_id'] ?>',this.textContent)" onclick="getFileName(this.textContent)" contenteditable><?php echo $result["productname"] ?></td>
-                            <td><img src="<?php echo $result["filepath"] ?>" height=50 width="50" alt="item"></td>
+                            <td><img src="<?php echo $result["filepath"] ?>" onclick="showImageModal(event, '<?= $result['filepath'] ?>')" height=50 width="50" alt="item"></td>
                             <td onblur="editQuantity('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["quantity"] ?></td>
                             <td onblur="editWprice('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["wprice"] ?></td>
                             <td onblur="editRprice('<?php echo $result['product_id'] ?>',this.textContent)" onclick="selectText()" contenteditable><?php echo $result["rprice"] ?></td>
 
-                            <td><a href="show_stock.php?product_id=<?php echo $result["product_id"] ?>"><i class="fa fa-eye"></i></a></td>
+
                             <td><a href="stock.php?product_id=<?php echo $result["product_id"] ?>&filepath=<?php echo $result["filepath"] ?>" class="text-danger"><i class="fa fa-trash"></i></a></td>
                         </tr>
                     <?php }
@@ -48,28 +61,59 @@ $ctr->delete();
         </div>
     </div>
 </div>
-<div class="modal fade" id="delete">
-
-    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
-            <!-- Modal Header -->
             <div class="modal-header">
-                <h4 class="modal-title text-danger">Delete Item!</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
             </div>
-            <!-- Modal body -->
             <div class="modal-body">
-                <p>Are you sure you want to delete this item</p>
+                <img id="modalImage" src="" alt="Card image" style="width: 100%;">
             </div>
-
-            <!-- Modal footer -->
-            <div class="modal-footer justify-content-between">
-                <button type="button" class="btn btn-warning btn-sm" data-bs-dismiss="modal">Close</button>
-                <a class="btn btn-danger btn-sm" href="stock.php?product_id=<?php echo $result["product_id"] ?>">Delete</a>
-            </div>
-
         </div>
     </div>
 </div>
 
 <?php include_once "../../includes/admin/footer.php" ?>
 <script src="../../extra/stock/stock.js"></script>
+
+<script>
+    function showImageModal(event, imagePath) {
+        // Set the source of the image in the modal
+        document.getElementById('modalImage').src = imagePath;
+
+        // Show the modal
+        $('#imageModal').modal('show');
+
+        // Disable the carousel controls
+        document.getElementById('carouselPrev').style.pointerEvents = 'none';
+        document.getElementById('carouselNext').style.pointerEvents = 'none';
+    }
+
+    // Listen for the hidden.bs.modal event to re-enable the carousel controls
+    $('#imageModal').on('hidden.bs.modal', function() {
+        document.getElementById('carouselPrev').style.pointerEvents = 'auto';
+        document.getElementById('carouselNext').style.pointerEvents = 'auto';
+    });
+
+    function searchStock(value) {
+        $(document).ready(function() {
+            var search = value;
+            $.ajax({
+                url: "../../extra/stock/search_stock2.php",
+                method: "POST",
+                data: {
+                    search: search
+                },
+                success: function(data) {
+                    $("#stock").html(data);
+                }
+            });
+
+        });
+
+    }
+</script>

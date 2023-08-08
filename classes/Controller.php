@@ -151,7 +151,18 @@ class Controller extends Model
       return  $this->selectDebitHistoryAddress($customer_name, $customer_address);
   }
 
+  protected function fetchWhereAndLimit50($table_name, ...$where_clauses)
+  {
+    $where_array = array();
+    foreach ($where_clauses as $where_clause) {
+      $parts = explode('=', $where_clause);
+      $key = trim($parts[0]);
+      $value = trim($parts[1]);
+      $where_array[$key] = $value;
+    }
 
+    return $this->selectWhereAndLimit50($table_name, $where_array);
+  }
 
 
   protected function lockInvoice()

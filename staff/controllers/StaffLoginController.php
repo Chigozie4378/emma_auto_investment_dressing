@@ -6,7 +6,7 @@ class StaffLoginController extends Controller
     {
         if (isset($_POST["staff_login"])) {
             $username = mysqli_escape_string($this->connect(), $_POST["username"]);
-            $password = (mysqli_escape_string($this->connect(), $_POST["password"]));
+            $password = md5(mysqli_escape_string($this->connect(), $_POST["password"]));
 
             $staff = $this->fetchWhereAnd("users", "username = $username", "password = $password");
             if (mysqli_num_rows($staff) > 0) {

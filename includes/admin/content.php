@@ -8,12 +8,12 @@
           <?php 
           if ($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/index.php')
           { 
-            echo "<h1 class='m-0'>Dashboard</h1>
+            echo "<h1 class='m-0'>Admin Dashboard</h1>
             </div><!-- /.col -->
             <div class='col-sm-6'>
               <ol class='breadcrumb float-sm-right'>
                 <li class='breadcrumb-item'><a href='#'>Home</a></li>
-                <li class='breadcrumb-item active'>Dashboard</li>
+                <li class='breadcrumb-item active'>Admin Dashboard</li>
               </ol>
             </div><!-- /.col -->
             ";
@@ -138,7 +138,28 @@
             </div><!-- /.col -->
             "; 
           }
-          
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/return_all_goods.php'){
+            echo "<h1 class='m-0'>Return All Goods</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'>Return All Goods</li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
+          elseif($_SERVER['PHP_SELF'] == '/emma_auto_investment_dressing/admin/views/return_each_goods.php'){
+            echo "<h1 class='m-0'>Return Individual Goods</h1> 
+            </div><!-- /.col -->
+            <div class='col-sm-6'>
+              <ol class='breadcrumb float-sm-right'>
+                <li class='breadcrumb-item'><a href='index.php'>Home</a></li>
+                <li class='breadcrumb-item active'>Return Individual Goods</li>
+              </ol>
+            </div><!-- /.col -->
+            "; 
+          }
           ?>
             
          

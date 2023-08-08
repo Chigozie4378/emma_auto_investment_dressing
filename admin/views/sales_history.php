@@ -3,8 +3,6 @@ $ctr = new SalesHistoryController();
 
 ?>
 
-
-
 <div class="container-fluid">
 
     <div class="row">
@@ -22,7 +20,7 @@ $ctr = new SalesHistoryController();
                                     </div>
                                 </div>&nbsp;&nbsp;&nbsp;
                                 <div class="input-group mb-3">
-                                    <input type="text" class="form-control" id="customer_name"  onkeyup="customerName(this.value)" placeholder="Customer Name">
+                                    <input type="text" class="form-control" id="customer_name" onkeyup="customerName(this.value)" placeholder="Customer Name">
                                     <div class="input-group-append">
                                         <span class="input-group-text"><i class="fa fa-search"></i></span>
                                     </div>
@@ -41,18 +39,18 @@ $ctr = new SalesHistoryController();
                             <div class="row d-print-none" style="font-weight:bolder">
                                 <div class="col-3">Total Sales:&nbsp; <input class="form-control" style="font-weight:bolder" type="text" value="<?php $total = $ctr->sumTotal();
 
-echo $total['value'] ?>"></div>
+                                                                                                                                                echo $total['value'] ?>"></div>
                                 <div class="col-3">Total Cash:&nbsp; <input class="form-control" style="font-weight:bolder" type="text" value="<?php $cash = $ctr->sumCash();
 
-echo $cash['value'] ?>"></div>
+                                                                                                                                                echo $cash['value'] ?>"></div>
                                 <div class="col-3">Total Transfer:&nbsp; <input class="form-control" style="font-weight:bolder" type="text" value="Transfer: <?php $transfer = $ctr->sumTransfer();
 
-echo $transfer['value'] ?> || Pos: <?php $pos = $ctr->sumPos();
+                                                                                                                                                                echo $transfer['value'] ?> || Pos: <?php $pos = $ctr->sumPos();
 
-echo $pos['value'] ?>"></div>
+                                    echo $pos['value'] ?>"></div>
                                 <div class="col-3">Total Debit:&nbsp; <input class="form-control" style="font-weight:bolder" type="text" value="<?php $debit = $ctr->sumDebit();
 
-echo $debit['value'] ?>"></div>
+                                                                                                                                                echo $debit['value'] ?>"></div>
 
                             </div>
                             <thead>
@@ -96,7 +94,7 @@ echo $debit['value'] ?>"></div>
                                                 <?php echo $row['total'] ?>
                                             </td>
                                             <td style="text-transform:uppercase">
-                                                <?php echo $row['deposit'] ?>
+                                                <?php echo $row['total_payment'] ?>
                                             </td>
                                             <td style="text-transform:uppercase">
                                                 <?php echo $row['balance'] ?>

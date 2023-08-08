@@ -1,11 +1,13 @@
-<?php 
+<?php
 include_once "../../autoload/loader.php";
- $ctr = new SalesHistoryController();
- $customer_name = $_GET["customer_name"];
- $customer_address = $_GET["customer_address"];
-$select = $ctr->searchSalesCustomerAddress($customer_name,$customer_address);
-while ($row = mysqli_fetch_array($select)){?>
-<capital>
+$ctr = new SalesController();
+$customer_name = $_GET["customer_name"];
+$username = $_GET["username"];
+
+
+$select = $ctr->showStaffHistoryCustomerName($customer_name,$username);
+while ($row = mysqli_fetch_array($select)) { ?>
+    <capital>
         <tr>
             <td style="text-transform:uppercase">
                 <?php echo ++$id ?>
@@ -35,13 +37,11 @@ while ($row = mysqli_fetch_array($select)){?>
                 <?php echo $row['balance'] ?>
             </td>
             <td style="text-transform:uppercase">
-                <?php echo $row['staff'] ?>
-            </td>
-            <td style="text-transform:uppercase">
                 <?php echo $row['date'] ?>
             </td>
-            <td class="text-center"><a href="sales_history_details.php?invoice=<?php echo $row['invoice_no'] ?>"><i class="fa fa-eye"></i></a></td>
+            <td class="text-center"><a href="sales_history_details.php?invoice_no=<?php echo $row['invoice_no'] ?>&customer_name=<?php echo $row['customer_name'] ?>&customer_address=<?php echo $row['customer_address'] ?>"><i class="fa fa-eye"></i></a>
+            </td>
         </tr>
-        </capital>
-        <?php }
+    </capital>
+<?php }
 ?>

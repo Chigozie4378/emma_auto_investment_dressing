@@ -1,8 +1,8 @@
 <?php include_once "../../includes/staff/header.php";
 $ctr = new SalesController();
 
-$result_sales = mysqli_fetch_array($ctr->showSales($_SESSION["customer_name"], $_SESSION["customer_address"], $_SESSION["invoice_no"]));
-$result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $_SESSION["customer_address"]));
+$result_sales = mysqli_fetch_array($ctr->showSalesHistory());
+$result_debit = mysqli_fetch_array($ctr->showSalesDebit());
 ?>
 <div class="container">
     <section class="invoice p-4">
@@ -55,7 +55,7 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
                     </thead>
                     <tbody>
                         <?php
-                        $select_sales_details = $ctr->showSalesDetails($_SESSION["invoice_no"]);
+                        $select_sales_details = $ctr->showSalesHistoryDetails();
                         while ($result_sales_histories = mysqli_fetch_array($select_sales_details)) { ?>
                             <tr>
                                 <td><?php echo ++$id ?></td>
@@ -176,7 +176,9 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
         </div>
         <div class="row">
             <div class="col-md-12 text-center">
-                <input onclick="window.print()" name="print" type="submit" class="toggle btn btn-primary d-print-none" value="print">
+                <input onclick="printpage()" name="print" type="submit" class="toggle btn btn-primary d-print-none" value="Print Wholesales">
+                <a href="../../print/staff/index_s.php?invoice_no=<?php echo $result_sales['invoice_no']?>" class="btn btn-success d-print-none">Print Retail</a>
+                <a href="./sales_history.php" class="btn btn-primary d-print-none">Back</a>
                 </form>
 
             </div>
@@ -184,7 +186,7 @@ $result_debit = mysqli_fetch_array($ctr->showDebit($_SESSION["customer_name"], $
     </section>
 </div>
 <?php
-$ctr->printInvoice($result_sales["customer_name"], $result_sales["customer_address"], $result_sales["invoice_no"], $_POST["supplied_by"], $_POST["checked_by"]);
+// $ctr->printInvoice($result_sales["customer_name"], $result_sales["customer_address"], $result_sales["invoice_no"], $_POST["supplied_by"], $_POST["checked_by"]);
 ?>
 <script>
     function printpage() {

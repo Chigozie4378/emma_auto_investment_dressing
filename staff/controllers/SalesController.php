@@ -1,6 +1,12 @@
 <?php
 class SalesController extends Controller
 {
+    public function oldValue($value)
+    {
+        if (isset($_POST["$value"])) {
+            echo $_POST["$value"];
+        }
+    }
     public function checkQty($productname)
     {
         return $this->fetchWhereAnd("stocks", "productname = $productname");
@@ -47,9 +53,21 @@ class SalesController extends Controller
                 $this->lockInvoice();
                 // sales
                 $customer_type = $_POST["customer_type"];
-                $title = $_POST["title"];
-                $customer_name = $title . " " . $_POST["customer_name"];
-                $customer_address = $_POST["customer_address"];
+                if (empty($_POST["title"])){
+                    $title = "Mr";
+                }else{
+                    $title = $_POST["title"];
+                }
+                if (empty($_POST["customer_name"])){
+                    $customer_name = "Mr Sir";
+                }else{
+                    $customer_name =  $customer_name = $title . " " . $_POST["customer_name"];
+                }
+                if (empty($_POST["customer_address"])){
+                    $customer_address = "Address";
+                }else{
+                    $customer_address = $_POST["customer_address"];
+                }
                 
                 $transport = $_POST["transport"];
                 $old_deposit = $_POST['old_deposit'];
@@ -61,14 +79,12 @@ class SalesController extends Controller
                 $cash = $_POST["cash"];
                 $transfer = $_POST["transfer"];
                 $pos = $_POST["pos"];
-               
                 $deposit = $_POST["deposit"];
                 $balance = $_POST["balance"];
                 $total = $_POST["tot"];
                 $staff_fullname = $_SESSION["staff_firstname"]." ".$_SESSION["staff_lastname"];
                 $username = $_SESSION["staff_username"];
-                $username = "username";
-                $status = "pending";
+                $status = "Pending";
                 if ($_POST["cash"] == 0 && $_POST["transfer"] == 0 && $_POST["pos"] == 0 && $_POST["balance"] != 0) {
                     $bill_type = "Debit";
                 } elseif ($_POST["cash"] == 0 && $_POST["transfer"] != 0 && $_POST["pos"] == 0 && $_POST["balance"] == 0) {
@@ -141,7 +157,7 @@ class SalesController extends Controller
                     $_SESSION["invoice_no"] = $invoice_no2;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
-                        $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff_fullname, $date);
+                        $this->insert("transfer", $bank_name, $invoice_no2, $transfer, $staff_fullname, $date,$status);
                     }
                     
                     if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
@@ -226,7 +242,7 @@ class SalesController extends Controller
                     }
                     if ($_POST["customer_type"] == "retail") {
                         Session::unset("cart");
-                        echo "<script> window.location = '../print/director/retail_print.php' </script>";
+                        echo "<script> window.location = '../../print/staff/retail_print.php' </script>";
                     } else {
                         Session::unset("cart");
                         echo "<script> window.location = 'print_wholesale.php' </script>";
@@ -235,7 +251,7 @@ class SalesController extends Controller
                     $_SESSION["invoice_no"] = $invoice_no;
                     if (!(empty($_POST["bank"]))) {
                         $bank_name = $_POST["bank"];
-                        $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff_fullname, $date);
+                        $this->insert("transfer", $bank_name, $invoice_no, $transfer, $staff_fullname, $date,$status);
                     }
                     if (!((empty($_POST["pos_type"])) && (empty($_POST["pos_charges"])))) {
                         $pos_charges = $_POST["pos_charges"];
@@ -319,7 +335,7 @@ class SalesController extends Controller
                     }
                     if ($_POST["customer_type"] == "retail") {
                         Session::unset("cart");
-                        echo "<script> window.location = '../print/director/retail_print.php' </script>";
+                        echo "<script> window.location = '../../print/staff/retail_print.php' </script>";
                     } else {
                         Session::unset("cart");
                         echo "<script> window.location = 'print_wholesale.php' </script>";
@@ -362,6 +378,51 @@ class SalesController extends Controller
             Session::unset("customer_address");
             echo "<script> window.location = 'wholesale.php' </script>";
         }
+    }
+
+    public function showHistory()
+    {
+        $username = $_SESSION["staff_username"];
+        $date = date("d-m-Y");
+        return $this->fetchWhereLikeAnd("sales", "username = $username", "date = $date");
+        
+    }
+    public function showSalesHistoryDetails()
+    {
+        $invoice_no = $_GET["invoice_no"];
+        return $this->fetchWhereAnd("sales_details", "invoice_no = $invoice_no");
+        
+    }
+    public function showSalesHistory()
+    {
+        $customer_name = $_GET["customer_name"];
+        $customer_address = $_GET["customer_address"];
+        $invoice_no = $_GET["invoice_no"];
+        return $this->fetchWhereAnd("sales", "customer_name = $customer_name", "customer_address = $customer_address","invoice_no = $invoice_no");
+        
+    }
+    public function showSalesDebit()
+    {
+        $customer_name = $_GET["customer_name"];
+        $customer_address = $_GET["customer_address"];
+        return $this->fetchWhereAnd("debit", "customer_name = $customer_name", "customer_address = $customer_address");
+        
+    }
+
+    public function showStaffHistoryCustomerName($customer_name,$username)
+    {
+        
+        $date = date("d-m-Y");
+        return $this->fetchWhereLikeAnd("sales", "customer_name = $customer_name","username = $username", "date = $date");
+        
+    }
+
+    public function showStaffHistoryCustomerAddress($customer_name,$customer_address,$username)
+    {
+        
+        $date = date("d-m-Y");
+        return $this->fetchWhereLikeAnd("sales", "customer_name = $customer_name","customer_address = $customer_address","username = $username", "date = $date");
+        
     }
 
 }

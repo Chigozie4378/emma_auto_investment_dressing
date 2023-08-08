@@ -1,5 +1,6 @@
 <?php
 session_start();
+error_reporting(E_ERROR);
 include_once "../../autoload/loader.php";
 Session::adminAccess("admin_username");
 include_once "../../includes/admin/head.php";
